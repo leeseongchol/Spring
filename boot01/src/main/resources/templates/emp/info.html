@@ -33,9 +33,9 @@
 				th:value="${emp.salary}" step="0.01" min="1" id="sal" readonly>
 		</div>
 		<div>
-			<button type="button">수정</button>
+			<button type="button" th:onclick="|location.href='@{empUpdate(employeeId=${emp.employeeId})}'|">수정</button>
 			<button type="button" th:onclick="|location.href='@{/empList}'|">목록</button>
-			<button type="button">삭제</button>
+			<button type="button" th:onclick="|location.href='@{/empDelete(employeeId=${emp.employeeId})}'|">삭제</button>
 		</div>
 	</div>
 </body>

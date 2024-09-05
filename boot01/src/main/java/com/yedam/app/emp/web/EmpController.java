@@ -43,7 +43,7 @@ public class EmpController {
 	}
 
 	// 단건조회 : GET => QueryString(커맨드 객체 or @RequestParam)
-	@GetMapping("empInfo") //empInfo?employeeId=value
+	@GetMapping("empInfo") // empInfo?employeeId=value
 	public String empInfo(EmpVO empVO, Model model) {
 		EmpVO findVO = empService.empinfo(empVO);
 		model.addAttribute("emp", findVO);
@@ -57,7 +57,7 @@ public class EmpController {
 	public String empInsertForm() {
 		return "emp/insert";
 	}
-	
+
 	// 등록 - 처리 : Post = > form 태그를 통한 submit(페이지)
 	// = > QueryString (커맨드 객체)
 	@PostMapping("empInsert")
@@ -70,14 +70,14 @@ public class EmpController {
 			// redirect: 가 가능한경우 GetMapping
 		} else {
 			// 등록되지 않은 경우
-			url = "redirect: empList";
+			url = "redirect:empList";
 
 		}
 		return url;
 	}
 
 	// 수정 - 페이지 : Get, 조건이 필요 <=> 단건조회
-	@GetMapping("empUpdate")
+	@GetMapping("empUpdate") // empUpdate?employeeId=value
 	public String empUpdateForm(EmpVO empVO, Model model) {
 		EmpVO findVO = empService.empinfo(empVO);
 		model.addAttribute("emp", findVO);
@@ -85,24 +85,24 @@ public class EmpController {
 	}
 
 	// 수정 - 처리 : AJAX => QueryString (@RequestBody)
-	@PostMapping("empUpdate")
-
+	//@PostMapping("empUpdate")
+	@ResponseBody
 	public Map<String, Object> empUpdateAJAXQueryString(EmpVO empVO) {
 		return empService.empUpdate(empVO);
 	}
 	// 수정 - 처리 : AJAX => JSON(@Requestbody)
 
-	// @PostMapping("empUpdate")
+	@PostMapping("empUpdate")
 	@ResponseBody // AJAX
 	public Map<String, Object> empUpdateAJAXJSON(@RequestBody EmpVO empVO) {
 		return empService.empUpdate(empVO);
 	}
 
 	// 삭제 - 처리 : Get => QueryString (@ReauestParam)
-	@GetMapping("empDelete")
+	@GetMapping("empDelete") // empDelete?employeeId=value
 	public String empDelete(Integer employeeId) {
 		empService.empDelete(employeeId);
-		return "redirect: empList";
+		return "redirect:empList";
 	}
 
 }
