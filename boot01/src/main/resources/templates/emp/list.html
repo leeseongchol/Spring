@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="https//www.thymeleaf.org/">
+<html xmlns:th="https//www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="Content">
 
-<head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta charset="UTF-8">
-<meta name="ctxPath" th:value="${contextPath}">
-<title></title>
-</head>
+
 <body>
-	<div>
+	<div class="container">
 		<h3>전체 사원 조회</h3>
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>NO.</th>
@@ -28,11 +25,11 @@
 					<!--/*  <tr
 						th:onclick="|location.href='@{/empInfo(employeeId=${info.employeeId})}'|">*/-->
 					<tr>
-						<td></td>
+						<td>[[${ sts. count }]]</td>
 						<td th:text="${info.employeeId}"></td>
 						<td th:text="${info.lastName}"></td>
 						<!--/* <td>입사일자 : [[${info.hireDate}]]</td> */-->
-						<td>[[${#dates.format(info.hireDate, "yyyy★ MM★ dd★" )}]]</td>
+						<td>[[${#dates.format(info.hireDate, "yyyy년 MM월 dd일" )}]]</td>
 						<td>[[${emps[sts.index].jobId}]]</td>
 					</tr>
 				</th:block>
