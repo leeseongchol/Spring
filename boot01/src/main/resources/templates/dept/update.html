@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="https//www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/default_layout}"
+	layout:fragment="Content">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<form name="updateForm" th:object="${dept}">
+		<h3>부서 정보 수정</h3>
+		<div>
+			<label for="did">부서번호</label> <input type="number" id="did"
+				th:field="*{departmentId}" readonly>
+		</div>
+		<div>
+			<label for="dname">부서명</label> <input type="text" id="dname"
+				th:field="*{departmentName}">
+		</div>
+		<div>
+			<label for="mid">책임자 사원번호</label> <input type=number id="mid"
+				th:field="*{managerId}">
+		</div>
+		<div>
+			<label for="lid">위치번호</label> <input type="number" id="lid"
+				th:field="*{locationId}">
+		</div>
+
+		<div>
+
+			<button type="button" id="updateBtn">저장</button>
+		</div>
+	</form>
+	<script>
+$('#updateBtn').on('click', updateAjax);
+
+function updateAjax(e){
+  // 1) 보낼 데이터 가져오기
+  let dataObj = getFormData();
+  // 2) AJAX
+  $.ajax("deptUpdate", {
+    type : 'post', //method
+   // data : dataObj //갹채 =>  QueryString
+   
+   
+   //JSON : @ResquestBody
+   contentType : 'application/json',
+   data: JSON.stringify(dataObj)
+  })
+  .done((data)=>{
+	  if(data.result){
+		  alert('완')
+	  }else{
+		  alert('실패')
+	  }
+
+  })
+  .fail((err)=>console.log(err));
+}
+
+function getFormData(){
+  let formAry = $('form[name="updateForm"]').serializeArray();
+
+/*
+[{ name : "employeeId", value : "100"},
+{ name: "lastName", value: "King"},
+ ...]
+*/
+/* {"employeeId" : 100, "lastName" : "King", /...}*/
+let formObj = {};
+$.each(formAry, function(idx, tag){
+  //tag) {name:"employeeId", value : "100"}
+formObj[tag.name] = tag.value;
+//formObj["employeeId"] = "100";
+});
+return formObj;
+}
+  </script>
+</body>
+</html>
